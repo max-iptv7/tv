@@ -5,10 +5,221 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max IPTV - اشتراكك الأفضل</title>
     <style>
-        /* ... (الأكواد السابقة تبقى كما هي) ... */
+        :root {
+            --gradient-start: #ffffff; /* خلفية بيضاء */
+            --gradient-end: #f0f0f0; /* تدرج فاتح */
+            --accent: #003366; /* أزرق غامق */
+            --accent-hover: #002244; /* أزرق غامق أكثر */
+            --text: #000000; /* نصوص سوداء */
+            --text-secondary: #333333; /* نصوص رمادية غامقة */
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
 
-        /* إضافة أنماط لقسم About Us */
-        .about-us {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .download-btn {
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .download-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px) scale(1.05); /* تأثير تكبير */
+        }
+
+        .hero {
+            text-align: center;
+            padding: 6rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(to right, var(--accent), var(--accent-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: fadeIn 2s ease-in-out; /* تأثير ظهور */
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: slideIn 1.5s ease-in-out; /* تأثير انزلاق */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            margin: 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            animation: zoomIn 1.5s ease-in-out; /* تأثير تكبير */
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .video-container img {
+            width: 100%;
+            display: block;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            border-style: solid;
+            border-width: 15px 0 15px 25px;
+            border-color: transparent transparent transparent white;
+            margin-left: 5px;
+        }
+
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .plan-card {
+            background: var(--accent); /* أزرق غامق */
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow);
+            color: white; /* نصوص بيضاء داخل الخانات */
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px) scale(1.05); /* تأثير تكبير */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* زيادة الظل */
+        }
+
+        .plan-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            color: white; /* سعر أبيض */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .reviews {
             background: var(--accent); /* أزرق غامق */
             padding: 2rem;
             border-radius: 12px;
@@ -18,68 +229,107 @@
             color: white; /* نصوص بيضاء */
             box-shadow: var(--shadow);
             animation: fadeIn 2s ease-in-out; /* تأثير ظهور */
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .about-us:hover {
-            transform: translateY(-10px) scale(1.02); /* تأثير تكبير */
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* زيادة الظل */
-        }
-
-        .about-us h2 {
+        .reviews h2 {
             font-size: 2rem;
             margin-bottom: 1rem;
-            animation: slideIn 1s ease-in-out; /* تأثير انزلاق */
         }
 
-        .about-us img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-            border: 4px solid white;
-            box-shadow: var(--shadow);
-            animation: zoomIn 1.5s ease-in-out; /* تأثير تكبير */
-        }
-
-        .about-us p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            animation: fadeIn 2s ease-in-out; /* تأثير ظهور */
-        }
-
-        .about-us .languages {
+        .review-form {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
         }
 
-        .about-us .languages span {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
+        .review-form label {
+            font-weight: bold;
+        }
+
+        .review-form input,
+        .review-form textarea {
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--text-secondary);
+            font-size: 1rem;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .review-form button {
+            background: white;
+            color: var(--accent);
+            padding: 1rem;
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s ease;
+        }
+
+        .review-form button:hover {
+            background: #f0f0f0;
+        }
+
+        .review-list {
+            margin-top: 2rem;
+        }
+
+        .review-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
             backdrop-filter: blur(10px);
             animation: slideIn 1s ease-in-out; /* تأثير انزلاق */
         }
 
-        @keyframes zoomIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .review-item h4 {
+            font-size: 1.2rem;
+            color: white;
         }
 
-        @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .review-item p {
+            color: var(--text-secondary);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* أيقونة التليجرام الثابتة */
+        .telegram-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0088cc; /* لون التليجرام الأزرق */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .telegram-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .telegram-icon:hover {
+            background: #0077b5; /* لون التليجرام الأزرق الغامق */
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .navbar {
+                padding: 1rem;
+            }
+            .video-container {
+                width: 95%;
+            }
         }
     </style>
 </head>
@@ -88,7 +338,7 @@
         <a href="#" class="logo">
             <span>Max IPTV</span>
         </a>
-        <a href="https://apk.e-droid.net/apk_t/app3419228_4776.apk?v=6" class="download-btn" target="_blank">
+        <a href="https://www.mediafire.com/file/o8xp2o3byqo4zby/Max+iptv.apk/file?dkey=hwtzafs8ovl&r=898" class="download-btn" target="_blank">
             تحميل التطبيق
         </a>
     </nav>
@@ -128,25 +378,13 @@
         </div>
     </main>
 
-    <!-- قسم About Us -->
-    <div class="about-us">
-        <h2>About Us</h2>
-        <img src="https://media.discordapp.net/attachments/1335949141230096418/1336033334454779904/IMG_4495.jpg?ex=67a25581&is=67a10401&hm=762c0478415a12700afe4f11d9c22847d73962124b3a576d05bd2a183167dee3&" alt="Ayoub Chaibi">
-        <h3>Ayoub Chaibi</h3>
-        <p>
-            Ayoub Chaibi is a talented and passionate programmer with expertise in web development and software engineering. He specializes in creating modern, responsive, and user-friendly applications. With a strong foundation in multiple programming languages, Ayoub is dedicated to delivering high-quality solutions.
-        </p>
-        <div class="languages">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span>Python</span>
-            <span>PHP</span>
-            <span>SQL</span>
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeVideo()">&times;</span>
+            <iframe id="videoFrame" width="100%" height="562" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
     </div>
 
-    <!-- بقية الأكواد تبقى كما هي -->
     <div class="reviews">
         <h2>مراجعات المستخدمين</h2>
         <form id="reviewForm" class="review-form">
@@ -170,7 +408,48 @@
     </a>
 
     <script>
-        // ... (الأكواد السابقة تبقى كما هي) ...
+        function openVideo(url) {
+            const modal = document.getElementById('videoModal');
+            const videoFrame = document.getElementById('videoFrame');
+            videoFrame.src = url;
+            modal.classList.add('active');
+        }
+
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const videoFrame = document.getElementById('videoFrame');
+            videoFrame.src = '';
+            modal.classList.remove('active');
+        }
+
+        document.getElementById('videoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'videoModal') {
+                closeVideo();
+            }
+        });
+
+        document.getElementById('reviewForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const feedback = document.getElementById('feedback').value;
+
+            if (name && feedback) {
+                const reviewList = document.querySelector('.review-list');
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('review-item');
+                
+                reviewItem.innerHTML = `
+                    <h4>${name}</h4>
+                    <p>${feedback}</p>
+                `;
+                
+                reviewList.appendChild(reviewItem);
+
+                document.getElementById('reviewForm').reset();
+            }
+        });
     </script>
 </body>
 </html>
